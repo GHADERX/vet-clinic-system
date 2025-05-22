@@ -1,16 +1,13 @@
 import React, { useState } from "react";
-import api from "../services/api";
-import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import "./Signup.css"; 
 
-export default function Register() {
+function Signup() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
   });
-
-  const [message, setMessage] = useState("");
-  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -19,40 +16,31 @@ export default function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await api.post("/auth/register", formData);
-      setMessage(res.data.message);
-      setFormData({ name: "", email: "", password: "" });
-
-      // بعد نجاح التسجيل، ننتقل إلى صفحة تسجيل الدخول
-      setTimeout(() => {
-        navigate("/");
-      }, 1500);
-    } catch (error) {
-      setMessage(error.response?.data?.message || "Server error");
+      await axios.post("http://localhost:5000/api/auth/register", formData);
+      alert("✅ Registration successful!");
+    } catch (err) {
+      alert("❌ Registration failed.");
     }
   };
 
   return (
-    <div style={styles.container}>
-      <h2 style={styles.title}>Sign Up</h2>
-      {message && <p style={styles.message}>{message}</p>}
-      <form onSubmit={handleSubmit} style={styles.form}>
+    <div className="signup-container">
+      <form className="signup-form" onSubmit={handleSubmit}>
+        <h2>User Registration</h2>
         <input
           type="text"
           name="name"
-          placeholder="Full Name"
+          placeholder="Username"
           value={formData.name}
           onChange={handleChange}
-          style={styles.input}
           required
         />
         <input
           type="email"
           name="email"
-          placeholder="Email Address"
+          placeholder="Email"
           value={formData.email}
           onChange={handleChange}
-          style={styles.input}
           required
         />
         <input
@@ -61,49 +49,15 @@ export default function Register() {
           placeholder="Password"
           value={formData.password}
           onChange={handleChange}
-          style={styles.input}
           required
         />
-        <button type="submit" style={styles.button}>Register</button>
+        <button type="submit">Register</button>
+        <p>
+          Already registered? <a href="/login">Login</a>
+        </p>
       </form>
     </div>
   );
 }
 
-const styles = {
-  container: {
-    maxWidth: "500px",
-    margin: "0 auto",
-    padding: "20px",
-    textAlign: "center",
-  },
-  title: {
-    fontSize: "24px",
-    marginBottom: "15px",
-  },
-  message: {
-    marginBottom: "10px",
-    fontWeight: "bold",
-    color: "green",
-  },
-  form: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "10px",
-  },
-  input: {
-    padding: "10px",
-    fontSize: "16px",
-    borderRadius: "5px",
-    border: "1px solid #ccc",
-  },
-  button: {
-    padding: "12px",
-    fontSize: "16px",
-    backgroundColor: "#007bff",
-    color: "#fff",
-    border: "none",
-    borderRadius: "5px",
-    cursor: "pointer",
-  },
-};
+export default Signup;
