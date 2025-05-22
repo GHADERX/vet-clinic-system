@@ -11,7 +11,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Navigate to="/login" />} />  {/* هذا هو المطلوب */}
+        <Route path="/" element={<Navigate to="/login" />} /> 
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Signup />} />
         <Route path="/appointments" element={<AppointmentsList />} />
