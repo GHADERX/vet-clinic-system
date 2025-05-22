@@ -42,6 +42,9 @@ return (
         onChange={(e) => setPassword(e.target.value)}
       />
       <button type="submit">Login</button>
+      <p style={{ marginTop: '10px' }}>
+    Don't have an account? <a href="/register" style={{ color: '#007bff' }}>Register</a>
+  </p>
     </form>
   </div>
 );
