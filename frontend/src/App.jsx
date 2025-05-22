@@ -13,7 +13,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Navigate to="/login" />} />  {/* هذا هو المطلوب */}
         <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
+        <Route path="/register" element={<Signup />} />
         <Route path="/appointments" element={<AppointmentsList />} />
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/add-appointment" element={<AddAppointment />} />
